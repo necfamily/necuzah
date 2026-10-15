@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10384b">
+<title>NECUZAH Super Abacus</title>
+<style>
+:root{--navy:#10384b;--teal:#1b655f;--gold:#ffbf58;--cream:#fff9e9;--ink:#19384e;--muted:#c7e0e7}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--navy);color:var(--ink)}
+body{min-height:100dvh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--navy),var(--teal));color:white;padding:12px 14px 10px;box-shadow:0 4px 16px #071e2b44;position:relative;z-index:2}
+.headrow{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:950;letter-spacing:1px;font-size:1rem}.subtitle{font-size:.78rem;opacity:.85;margin-top:3px}
+.status{font-size:.75rem;background:#ffffff18;border:1px solid #ffffff38;border-radius:999px;padding:6px 9px;white-space:nowrap}
+nav{max-width:1200px;margin:10px auto 0;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
+nav button{flex:0 0 auto;border:0;border-radius:11px;padding:10px 13px;background:#e7f0f5;color:#294d61;font:inherit;font-size:.88rem;font-weight:850;cursor:pointer}
+nav button.active{background:var(--gold);color:#573b1d}
+main{flex:1;display:flex;flex-direction:column;width:100%;max-width:1240px;margin:0 auto;padding:10px 12px 0;min-height:0}
+.module-info{color:var(--muted);font-size:.78rem;margin:0 2px 8px;line-height:1.4}
+.framewrap{flex:1;min-height:0;background:var(--cream);border-radius:16px 16px 0 0;padding:5px;box-shadow:0 5px 0 #071e2b30;overflow:hidden}
+iframe{display:block;width:100%;height:calc(100dvh - 185px);min-height:450px;border:0;border-radius:12px;background:var(--cream)}
+footer{text-align:center;color:var(--muted);font-size:.72rem;padding:8px 12px 10px}
+@media(min-width:800px){header{padding:14px 24px 10px}main{padding:12px 18px 0}.subtitle{font-size:.82rem}iframe{height:calc(100dvh - 190px);min-height:550px}}
+@media(max-width:420px){header{padding:10px 10px 8px}.brand{font-size:.88rem}.subtitle{font-size:.7rem}.status{font-size:.66rem;padding:5px 7px}nav{margin-top:9px}nav button{padding:9px 11px;font-size:.82rem}main{padding:7px 7px 0}.module-info{font-size:.72rem}iframe{height:calc(100dvh - 190px);min-height:380px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="headrow">
+    <div><div class="brand">🌟 NECUZAH SUPER ABACUS</div><div class="subtitle">Abacus skills · Mental mathematics · Adventure learning</div></div>
+    <div class="status" id="status" role="status" aria-live="polite">Opening Adventure…</div>
+  </div>
+  <nav aria-label="Learning activities">
+    <button class="active" type="button" data-src="NECUZAH_Adventure_Connected_v2.html" data-label="Adventure">🗺️ Adventure</button>
+    <button type="button" data-src="rod-training.html" data-label="Rod Training">🧮 Rod Training</button>
+    <button type="button" data-src="NECUZAH_Talking_Hybrid_Abacus_v5.html" data-label="Talking Abacus">🎙️ Talking Abacus</button>
+  </nav>
+</header>
+<main>
+  <p class="module-info">Choose Adventure, Rod Training, or Talking Abacus above. Each activity opens here without replacing the other modules.</p>
+  <section class="framewrap">
+    <iframe id="game" title="NECUZAH Adventure learning activity" src="NECUZAH_Adventure_Connected_v2.html" allow="microphone"></iframe>
+  </section>
+</main>
+<footer>NECUZAH Super Abacus · One interface · Separate modules so each can be improved safely</footer>
+<script>
+(()=>{
+'use strict';
+const frame=document.getElementById('game');
+const status=document.getElementById('status');
+const buttons=[...document.querySelectorAll('nav button')];
+let active=buttons[0];
+function setModule(btn){
+  active=btn;
+  buttons.forEach(b=>{const selected=b===btn;b.classList.toggle('active',selected);b.setAttribute('aria-current',selected?'page':'false')});
+  status.textContent='Opening '+btn.dataset.label+'…';
+  frame.title='NECUZAH '+btn.dataset.label;
+  if(frame.getAttribute('src')!==btn.dataset.src)frame.src=btn.dataset.src;
+  else status.textContent=btn.dataset.label+' selected';
+}
+buttons.forEach(btn=>btn.addEventListener('click',()=>setModule(btn)));
+frame.addEventListener('load',()=>{status.textContent=active.dataset.label+' ready'});
+frame.addEventListener('error',()=>{status.textContent='Could not load module. Check its filename in GitHub.'});
+})();
+</script>
+</body>
+</html>
