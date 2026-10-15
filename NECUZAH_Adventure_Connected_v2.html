@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#123c56">
+<title>NECUZAH Super Abacus Adventure</title>
+<style>
+:root{--ink:#17334a;--cream:#fff8e8;--gold:#ffd166;--mint:#8ee3bd;--blue:#1d6683;--pink:#ff8e9e}*{box-sizing:border-box}body{margin:0;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:#0c344a;min-height:100vh}button,input{font:inherit}button{cursor:pointer;border:0;font-weight:800;transition:transform .15s,filter .15s}button:hover{filter:brightness(1.05);transform:translateY(-2px)}button:focus-visible,input:focus-visible{outline:3px solid #ffce58;outline-offset:3px}.shell{max-width:1120px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:white;margin-bottom:14px}.brand{display:flex;gap:10px;align-items:center;font-weight:1000;letter-spacing:.5px}.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,#ffe17a,#ff9b55);display:grid;place-items:center;font-size:25px;box-shadow:0 5px 0 #9b5c35}.stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{background:#ffffff20;border:1px solid #ffffff40;border-radius:999px;padding:8px 12px;font-weight:800;font-size:13px}.hero{position:relative;overflow:hidden;border-radius:28px;min-height:300px;padding:28px;color:white;background:linear-gradient(115deg,#143c56eF,#143c5666),radial-gradient(ellipse at 15% 90%,#66b879 0 18%,transparent 19%),radial-gradient(ellipse at 88% 100%,#3f956a 0 25%,transparent 26%),linear-gradient(#65c7e9 0%,#b5ecdf 52%,#f4d58b 100%);box-shadow:0 18px 40px #061c2b66}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 18%,#fff5b8 0 35px,transparent 36px),radial-gradient(ellipse at 20% 112%,#276a55 0 130px,transparent 132px),radial-gradient(ellipse at 75% 115%,#1d765e 0 170px,transparent 172px);pointer-events:none}.hero-content{position:relative;z-index:1;max-width:620px}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:1000;color:#ffe08a}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:10px 0 12px;max-width:600px}.hero p{font-size:16px;line-height:1.55;max-width:540px;color:#f0fbff}.primary{background:linear-gradient(135deg,#ffe07a,#ffad4f);color:#56371c;padding:13px 19px;border-radius:14px;box-shadow:0 5px 0 #a65b31}.secondary{background:#e7f7ff;color:#17475b;padding:11px 15px;border-radius:13px}.section-head{display:flex;align-items:end;justify-content:space-between;color:white;margin:25px 2px 12px;gap:10px}.section-head h2{margin:0;font-size:23px}.section-head p{margin:4px 0 0;color:#c4e6f1;font-size:13px}.worlds{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.world{position:relative;text-align:left;overflow:hidden;min-height:205px;padding:0;border-radius:21px;background:#fff8e8;color:var(--ink);box-shadow:0 8px 0 #071f2b66}.world-art{height:105px;position:relative;display:grid;place-items:center;font-size:52px;overflow:hidden}.forest{background:radial-gradient(circle at 75% 25%,#fff1a4 0 19px,transparent 20px),linear-gradient(#7ed9bc,#39856e)}.tiger{background:radial-gradient(circle at 78% 20%,#fff3b4 0 18px,transparent 19px),linear-gradient(#83d6ef,#d5e89b)}.island{background:radial-gradient(circle at 76% 22%,#fff2aa 0 20px,transparent 21px),linear-gradient(#4bc9e7 0 57%,#f8d78b 58%)}.castle{background:radial-gradient(circle at 76% 20%,#fff0ad 0 18px,transparent 19px),linear-gradient(#6b77c8,#c2b6f5)}.world-art:after{content:"";position:absolute;bottom:-26px;left:-10%;width:120%;height:60px;background:#1c705b;border-radius:50% 50% 0 0}.world-art span{position:relative;z-index:1;filter:drop-shadow(0 5px 2px #153d3d55)}.world-copy{padding:12px 14px 15px}.world-copy h3{font-size:16px;margin:0 0 5px}.world-copy p{font-size:12px;line-height:1.35;margin:0;color:#597080}.world-copy small{display:block;margin-top:9px;color:#31745e;font-weight:900}.workspace{display:none;margin-top:18px;background:var(--cream);border-radius:26px;padding:clamp(16px,3vw,28px);box-shadow:0 15px 40px #061c2b77}.workspace.show{display:block;animation:pop .3s ease}@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.work-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.back{background:#dbeaf0;color:#244b5b;border-radius:12px;padding:9px 12px}.mode-row{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.mode{background:#e4edf0;color:#33576a;padding:10px 13px;border-radius:12px}.mode.active{background:#174f69;color:white}.game-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.question-card{background:white;border:2px solid #e5e6d8;border-radius:22px;padding:22px;text-align:center;min-width:0}.q-label{font-size:12px;font-weight:1000;letter-spacing:1.5px;text-transform:uppercase;color:#638191}.expression{font-size:clamp(34px,6vw,56px);font-weight:1000;letter-spacing:2px;margin:18px 0;color:#153f58;overflow-wrap:anywhere}.hint{min-height:24px;color:#607785;font-size:14px}.answer-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}.answer{width:min(100%,240px);padding:13px;border:2px solid #d5e2e5;border-radius:13px;font-size:21px;text-align:center;background:#fff}.check{background:#1d6b77;color:white;padding:13px 19px;border-radius:13px}.feedback{min-height:34px;margin-top:15px;font-weight:900}.feedback.good{color:#168052}.feedback.try{color:#b56a20}.side-card{background:#e9f6ef;border-radius:22px;padding:18px}.side-card h3{margin:0 0 8px}.side-card p{line-height:1.5;font-size:14px;color:#476a70}.beadboard{margin:16px auto 4px;max-width:270px;border-radius:16px;background:#a96c42;padding:12px;box-shadow:inset 0 0 0 4px #d59b5f}.rail{height:8px;background:#ffe6a5;border-radius:6px;margin:8px 0;position:relative}.beads{display:flex;justify-content:center;gap:9px;margin:7px}.bead{width:25px;height:25px;border-radius:50%;background:linear-gradient(135deg,#ffdf79,#f49b43);box-shadow:0 3px 0 #754629}.bead.off{opacity:.24;transform:translateY(3px)}.bead.five{background:linear-gradient(135deg,#9ee5ff,#378dbd)}
+.abacus-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:9px 0}
+.abacus-tool{background:#d8eaf0;color:#19475c;border-radius:9px;padding:8px 10px;font-size:12px}
+.abacus-frame{background:linear-gradient(120deg,#704021,#a96c42,#704021);border:4px solid #754326;border-radius:12px;padding:7px;box-shadow:inset 0 0 0 2px #d59b5f}
+.abacus-rods{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.abacus-rod{min-width:0;border-radius:6px;padding:3px 1px}
+.abacus-rod.unit-rod{outline:2px solid #ffd166;background:#ffd16622}
+.abacus-rod-label{text-align:center;color:#fff4d6;font-size:clamp(7px,1.3vw,10px);font-weight:1000;white-space:nowrap;margin-bottom:4px}
+.abacus-track{height:clamp(125px,20vw,180px);display:grid;grid-template-rows:1fr 7px 1.5fr;position:relative}
+.abacus-track:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:4px;transform:translateX(-50%);background:linear-gradient(90deg,#c8b28b,#fff0cb,#a98a60)}
+.abacus-zone{display:flex;align-items:center;flex-direction:column;gap:4px;padding:2px 0;z-index:1}
+.abacus-bar{background:linear-gradient(#ffe5a0,#d89b4b);border:1px solid #744222;border-radius:3px;z-index:2}
+.abacus-bead{display:block;position:relative;z-index:4;width:min(100%,30px);height:clamp(13px,2.4vw,19px);flex:0 0 clamp(13px,2.4vw,19px);padding:0;border:2px solid #8e672d;border-radius:45%;background:linear-gradient(#ffeda7,#e7bd4e,#c48a2f);box-shadow:0 2px 0 #60351d;touch-action:manipulation}
+.abacus-bead.red-bead{background:linear-gradient(#ffb2a9,#df5548,#a92d27);border-color:#7f211d}
+.abacus-bead.inactive{opacity:.45;filter:grayscale(.25)}
+.abacus-bead.upper-on{transform:translateY(8px)}
+.abacus-bead.lower-on{transform:translateY(-7px)}
+.abacus-readout{text-align:center;font-weight:1000;margin:8px 0;color:#17334a}
+.abacus-help{font-size:12px;line-height:1.4;color:#476a70}
+@media(max-width:430px){.abacus-track{height:125px}.abacus-bead{border-width:1px}.abacus-rod-label{font-size:6px}}
+.tiny{font-size:12px;color:#67818b}.roundbar{height:8px;border-radius:99px;background:#d8e3df;overflow:hidden;margin:12px 0}.roundbar div{height:100%;width:0;background:linear-gradient(90deg,#66d5a5,#ffcf61);transition:width .3s}.reward{display:none;margin-top:15px;text-align:center;padding:16px;border-radius:17px;background:linear-gradient(110deg,#fff1b8,#d8ffdf);animation:pop .35s}.reward.show{display:block}.reward .treasure{font-size:40px;display:block;animation:bounce .65s infinite alternate}@keyframes bounce{to{transform:translateY(-7px) rotate(4deg)}}.foot{text-align:center;color:#c4e6f1;font-size:12px;padding:22px 0 6px}.hidden{display:none!important}@media(max-width:800px){.worlds{grid-template-columns:repeat(2,1fr)}.game-layout{grid-template-columns:1fr}.hero{min-height:280px;padding:23px}.top{align-items:flex-start}}@media(max-width:430px){.shell{padding:11px}.world{min-height:190px}.world-art{height:90px}.stats .pill{font-size:11px;padding:7px 9px}.hero h1{font-size:36px}.hero p{font-size:14px}}
+</style></head><body><main class="shell">
+<header class="top"><div class="brand"><div class="logo">🧮</div><div>NECUZAH<br><span style="font-size:11px;opacity:.8;letter-spacing:1.4px">SUPER ABACUS ADVENTURE</span></div></div><div class="stats"><span class="pill">⭐ Stars: <b id="stars">0</b></span><span class="pill">🔥 Streak: <b id="streak">0</b></span></div></header>
+<section class="hero"><div class="hero-content"><div class="eyebrow">Your number adventure begins</div><h1>Learn numbers.<br>Unlock new worlds.</h1><p>Explore magical places, master your physical abacus, solve number challenges and collect stars. Choose the path that feels right for you.</p><button class="primary" onclick="document.getElementById('worldsTitle').scrollIntoView({behavior:'smooth'})">🗺️ Choose an adventure</button></div></section>
+<div class="section-head" id="worldsTitle"><div><h2>Choose your world</h2><p>Every world is a different learning path. You can switch whenever you like.</p></div></div>
+<section class="worlds">
+<button class="world" onclick="openWorld('forest')"><div class="world-art forest"><span>🌳🦋🌿</span></div><div class="world-copy"><h3>🌱 Enchanted Forest</h3><p>Learn numbers and discover how abacus beads work.</p><small>BEGINNER FRIENDLY ↗</small></div></button>
+<button class="world" onclick="openWorld('tiger')"><div class="world-art tiger"><span>🐯🌼🌴</span></div><div class="world-copy"><h3>🐯 Tiger Trail</h3><p>Practise friends of 5 and build confidence with sums.</p><small>BUILD YOUR SKILLS ↗</small></div></button>
+<button class="world" onclick="openWorld('island')"><div class="world-art island"><span>🏝️🦜💎</span></div><div class="world-copy"><h3>🏴‍☠️ Treasure Island</h3><p>Follow number trails and solve longer challenges.</p><small>CHALLENGE YOURSELF ↗</small></div></button>
+<button class="world" onclick="openWorld('castle')"><div class="world-art castle"><span>🏰✨☁️</span></div><div class="world-copy"><h3>☁️ Sky Castle</h3><p>Train your mind with mental arithmetic adventures.</p><small>MENTAL MASTERY ↗</small></div></button>
+</section>
+<section id="workspace" class="workspace"><div class="work-top"><div><div class="eyebrow" id="worldEyebrow" style="color:#39816d">YOUR ADVENTURE</div><h2 id="worldTitle" style="margin:5px 0">Enchanted Forest</h2></div><button class="back" onclick="closeWorld()">← Adventure map</button></div>
+<div class="mode-row">
+<button class="mode active" data-mode="learn" onclick="setMode('learn',this)">👀 Learn the route</button>
+<button class="mode" data-mode="recognition" onclick="setMode('recognition',this)">🔢 Number trail</button>
+<button class="mode" data-mode="friends" onclick="setMode('friends',this)">✋ Friends of 5</button>
+<button class="mode" data-mode="unit" onclick="setMode('unit',this)">🧮 Unit rod</button>
+<button class="mode" data-mode="unitSub" onclick="setMode('unitSub',this)">➖ Unit subtraction</button>
+<button class="mode" data-mode="addSequence" onclick="setMode('addSequence',this)">➕ Advanced addition</button>
+<button class="mode" data-mode="subSequence" onclick="setMode('subSequence',this)">➖ Advanced subtraction</button>
+<button class="mode" data-mode="sequence" onclick="setMode('sequence',this)">⚡ Mixed long trail</button>
+<button class="mode" data-mode="tens" onclick="setMode('tens',this)">🪵 Tens rod</button>
+<button class="mode" data-mode="multi" onclick="setMode('multi',this)">💯 Hundreds & thousands</button>
+<button class="mode" data-mode="advanced" onclick="setMode('advanced',this)">✖️ Division & decimals</button>
+</div>
+<div class="roundbar"><div id="roundProgress"></div></div><div class="tiny" id="roundLabel">Practice round: 3 questions</div>
+<div class="game-layout"><div class="question-card"><div class="q-label" id="qLabel">LET'S LEARN</div><div class="expression" id="expression">2 + 2 − 1</div><div class="hint" id="questionHint">Tap the speaker to hear the question.</div><div class="answer-row"><button class="secondary" onclick="speakQuestion()">🔊 Hear it</button><button class="secondary" id="voiceBtn" onclick="voiceAnswer()">🎙️ Say answer</button></div><div class="answer-row"><input class="answer" id="answer" inputmode="text" autocomplete="off" placeholder="Type answer or number word" aria-label="Your answer"><button class="check" onclick="checkAnswer()">Check ✓</button></div><div class="feedback" id="feedback" aria-live="polite"></div><div class="answer-row"><button class="secondary" onclick="showHint()">💡 Hint</button><button class="primary hidden" id="nextBtn" onclick="nextQuestion()">Next question →</button></div><div class="reward" id="reward"><span class="treasure" id="treasure">🎁</span><b id="rewardTitle">Star collected!</b><div id="rewardText">You did it!</div></div></div>
+<aside class="side-card"><h3>🧭 Your guide</h3><p id="guideText">Use a real physical abacus. Move beads towards the reckoning bar to count them. The upper bead is worth 5; each lower bead is worth 1.</p><div class="abacus-frame" aria-label="Interactive seven-rod abacus"><div class="abacus-rods" id="virtualRods"></div></div><div class="abacus-readout">Virtual abacus value: <span id="abacusValue">0</span></div><div class="abacus-tools"><button class="abacus-tool" onclick="selectAbacusRod(3)">Select unit</button><button class="abacus-tool" onclick="selectAbacusRod(2)">Select tens</button><button class="abacus-tool" onclick="selectAbacusRod(1)">Select hundreds</button><button class="abacus-tool" onclick="clearAbacus()">Clear beads</button></div><p class="abacus-help">Touch any bead to move it. The unit rod is third from the right (red-marked); the two rods to its right are reserved for decimals. Upper bead = 5; each lower bead = 1. Active beads touch the reckoning bar.</p><h3>🌟 Skill progress</h3><p id="progressText">Start with any path. The challenge adjusts as you practise.</p><p class="tiny">Short rounds · Each skill tracks progress separately on this device. Multi-rod and advanced operation engines are planned next.</p></aside></div></section>
+<div class="foot">Made for curious minds · Works offline as a single HTML file after you save it · Prototype version</div></main>
+<script>
+const $=id=>document.getElementById(id);let world='forest',mode='learn',current=null,round=0,correctRound=0,stars=Number(localStorage.getItem('necuzahStars')||0),streak=Number(localStorage.getItem('necuzahStreak')||0),skill=JSON.parse(localStorage.getItem('necuzahSkills')||'{}'),level=Number(localStorage.getItem('necuzahLevel')||1),answered=false,skillLevels=JSON.parse(localStorage.getItem('necuzahSkillLevels')||'{}');
+const worlds={forest:{title:'Enchanted Forest',eyebrow:'🌱 FIRST STEPS',guide:'Use your physical abacus. The upper bead is worth 5. Each of the four lower beads is worth 1. For 3, move three lower beads to the reckoning bar.',hint:'Count carefully. Start with the number shown, then move the beads.'},tiger:{title:'Tiger Trail',eyebrow:'🐯 GROW YOUR SKILLS',guide:'Try friends of 5. Numbers that make 5 together are 1 and 4, or 2 and 3. Practise with your physical abacus.',hint:'Ask yourself: how many more are needed to make 5?'},island:{title:'Treasure Island',eyebrow:'🏴‍☠️ CHALLENGE TRAIL',guide:'Each operation changes your running total. On the unit rod, keep every running total between 0 and 9.',hint:'Work one operation at a time. Keep the running total between 0 and 9.'},castle:{title:'Sky Castle',eyebrow:'☁️ MENTAL MASTERY',guide:'Try to picture the beads in your mind. You may still use your physical abacus whenever you need it.',hint:'Say the numbers quietly to yourself and picture the bead movements.'}};
+const abacusLabels=['1000s','100s','10s','UNITS','DEC-1','DEC-2','DEC-3'];
+let abacusRods=[],selectedAbacusRod=3;
+function buildVirtualAbacus(){
+ const host=$('virtualRods');if(!host)return;
+ abacusLabels.forEach((label,i)=>{
+  const el=document.createElement('div');el.className='abacus-rod'+(i===3?' unit-rod':'');
+  el.innerHTML='<div class="abacus-rod-label">'+label+'</div><div class="abacus-track"><div class="abacus-zone upper-zone"></div><div class="abacus-bar"></div><div class="abacus-zone lower-zone"></div></div>';
+  const upper=document.createElement('button');upper.type='button';upper.className='abacus-bead inactive'+(i===3?' red-bead':'');upper.setAttribute('aria-label',label+' upper bead worth five');upper.title='Upper bead = 5; touch to move';upper.onclick=()=>{abacusRods[i].upperOn=!abacusRods[i].upperOn;renderVirtualAbacus()};
+  el.querySelector('.upper-zone').appendChild(upper);
+  const lowers=[];
+  for(let j=0;j<4;j++){const bead=document.createElement('button');bead.type='button';bead.className='abacus-bead inactive'+(i===3&&j===0?' red-bead':'');bead.setAttribute('aria-label',label+' lower bead '+(j+1)+' worth one');bead.title='Lower bead = 1; touch to move';bead.onclick=()=>{const r=abacusRods[i];r.lowerCount=(j<r.lowerCount)?j:j+1;r.lowerCount=Math.max(0,Math.min(4,r.lowerCount));renderVirtualAbacus()};el.querySelector('.lower-zone').appendChild(bead);lowers.push(bead)}
+  host.appendChild(el);abacusRods.push({el,upper,lowers,upperOn:false,lowerCount:0});
+ });
+ renderVirtualAbacus();
+}
+function digitOnRod(r){return (r.upperOn?5:0)+r.lowerCount}
+function virtualAbacusValue(){let total=0;abacusRods.forEach((r,i)=>{total+=digitOnRod(r)*Math.pow(10,3-i)});return Math.round(total*1000)/1000}
+function renderVirtualAbacus(){
+ abacusRods.forEach(r=>{
+  r.upper.classList.toggle('upper-on',r.upperOn);r.upper.classList.toggle('inactive',!r.upperOn);
+  r.lowers.forEach((b,j)=>{const on=j<r.lowerCount;b.classList.toggle('lower-on',on);b.classList.toggle('inactive',!on)});
+ });
+ const out=$('abacusValue');if(out)out.textContent=String(virtualAbacusValue());
+}
+function setAbacusNumber(n){
+ abacusRods.forEach(r=>{r.upperOn=false;r.lowerCount=0});
+ let v=Math.max(0,Number(n)||0);
+ abacusRods.forEach((r,i)=>{const power=3-i;let digit;if(power>=0)digit=Math.floor(v/Math.pow(10,power))%10;else digit=Math.floor(v/Math.pow(10,power))%10;r.upperOn=digit>=5;r.lowerCount=digit%5});
+ renderVirtualAbacus();
+}
+function selectAbacusRod(i){selectedAbacusRod=Math.max(0,Math.min(6,i));document.querySelectorAll('.abacus-rod').forEach((el,j)=>el.style.boxShadow=j===selectedAbacusRod?'inset 0 0 0 2px #ffe08a':'none')}
+function clearAbacus(){setAbacusNumber(0)}
+function setupAbacusForQuestion(q){
+ if(!abacusRods.length)return;
+ if(!q||q.planned){clearAbacus();return}
+ // Start addition/subtraction/sequence questions at their first number so the learner must move the beads.
+ const first=String(q.expr||'').match(/^\s*(\d+)/);
+ if(['unit','unitSub','addSequence','subSequence','sequence','friends'].includes(mode)&&first)setAbacusNumber(Number(first[1]));
+ else if(mode==='tens'&&first)setAbacusNumber(Number(first[1]));
+ else clearAbacus();
+}
+const wordNums={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20};function save(){localStorage.setItem('necuzahStars',stars);localStorage.setItem('necuzahStreak',streak);localStorage.setItem('necuzahSkills',JSON.stringify(skill));localStorage.setItem('necuzahLevel',level);localStorage.setItem('necuzahSkillLevels',JSON.stringify(skillLevels));$('stars').textContent=stars;$('streak').textContent=streak;$('progressText').textContent='Current challenge level: '+level+'. Each path tracks its own practice. Correct answers help your skills grow; hints and practice are always available.'}save();
+function openWorld(w){world=w;$('workspace').classList.add('show');$('worldTitle').textContent=worlds[w].title;$('worldEyebrow').textContent=worlds[w].eyebrow;setMode(w==='forest'?'learn':w==='tiger'?'friends':w==='island'?'sequence':'unit',document.querySelector('[data-mode="'+(w==='forest'?'learn':w==='tiger'?'friends':w==='island'?'sequence':'unit')+'"]'));$('workspace').scrollIntoView({behavior:'smooth',block:'start'})}function closeWorld(){$('workspace').classList.remove('show');$('worldsTitle').scrollIntoView({behavior:'smooth'})}
+function setMode(m,btn){mode=m;document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));round=0;correctRound=0;$('roundProgress').style.width='0%';$('roundLabel').textContent='Practice round: 3 questions';$('guideText').textContent=worlds[world].guide;$('feedback').textContent='';$('reward').classList.remove('show');newQuestion()}
+function rand(n){return Math.floor(Math.random()*n)}
+function buildValidSequence(kind){
+ let maxTerms=Math.min(30,Math.max(4,4+(level-1)*3));
+ for(let attempt=0;attempt<1000;attempt++){
+  let start=rand(10),total=start,terms=[];
+  for(let i=0;i<maxTerms;i++){
+   let choices=[];
+   for(let n=1;n<=9;n++){
+    if((kind==='addSequence'||kind==='sequence')&&total+n<=9)choices.push({op:'+',n});
+    if((kind==='subSequence'||kind==='sequence')&&total-n>=0)choices.push({op:'−',n});
+   }
+   if(!choices.length)break;
+   const t=choices[rand(choices.length)];
+   terms.push(t);total+=t.op==='+'?t.n:-t.n;
+  }
+  if(terms.length>=3){
+   return {expr:[String(start),...terms.map(t=>t.op+' '+t.n)].join(' '),answer:total,label:kind==='addSequence'?'ADVANCED UNIT-ROD ADDITION':kind==='subSequence'?'ADVANCED UNIT-ROD SUBTRACTION':'MIXED LONG TRAIL',hint:'Say the starting number, then apply each operation in order. Every running total stays between 0 and 9.',spoken:[numberWord(start),...terms.map(t=>(t.op==='+'?'plus ':'minus ')+numberWord(t.n))].join(' '),terms:terms.length};
+  }
+ }
+ return {expr:'2 + 1 − 1 + 2',answer:4,label:'UNIT-ROD SEQUENCE',hint:'Keep each running total between 0 and 9.',spoken:'two plus one minus one plus two',terms:3};
+}
+function numberWord(n){return Object.keys(wordNums).find(k=>wordNums[k]===n)||String(n)}
+function makeQ(){
+ let a,b,answer,expr,label,hint;
+ if(mode==='learn'){a=rand(10);return{expr:String(a),answer:a,label:'LEARN THE BEADS',hint:'What number is this? Count it on your physical abacus.',spoken:numberWord(a)}}
+ if(mode==='recognition'){a=rand(10);return{expr:String(a),answer:a,label:'NUMBER TRAIL',hint:'Say the number, then type it as a digit or a word.',spoken:numberWord(a)}}
+ if(mode==='friends'){a=rand(4)+1;return{expr:a+' + ? = 5',answer:5-a,label:'FRIENDS OF 5',hint:'What number joins '+a+' to make 5?',spoken:numberWord(a)+' plus what number makes five?'}}
+ if(mode==='unit'){
+  do{a=rand(9)+1;b=rand(10-a);answer=a+b}while(answer>9);
+  return{expr:a+' + '+b+' = ?',answer,label:'BEGINNER UNIT-ROD ADDITION',hint:'Use the lower beads for 1 each and the upper bead for 5. Keep the answer from 0 to 9.',spoken:numberWord(a)+' plus '+numberWord(b)}
+ }
+ if(mode==='unitSub'){
+  a=rand(9);b=rand(a+1);answer=a-b;
+  return{expr:a+' − '+b+' = ?',answer,label:'BEGINNER UNIT-ROD SUBTRACTION',hint:'Start with the first number and move beads away from the reckoning bar to subtract.',spoken:numberWord(a)+' minus '+numberWord(b)}
+ }
+ if(['addSequence','subSequence','sequence'].includes(mode))return buildValidSequence(mode);
+ if(mode==='tens'){
+  a=rand(90)+10;b=rand(90)+10;answer=a+b;
+  return{expr:a+' + '+b+' = ?',answer,label:'TENS-ROD PATH PREVIEW',hint:'This is a multi-rod preview. The full place-value teaching sequence is the next development milestone.',spoken:numberWord(a)+' plus '+numberWord(b)}
+ }
+ if(mode==='multi'||mode==='advanced'){
+  return{expr:mode==='multi'?'Tens · Hundreds · Thousands':'Multiplication · Division · Decimals',answer:null,label:mode==='multi'?'MULTI-ROD MODULE PLANNED':'ADVANCED OPERATIONS PLANNED',hint:'This path is shown in the architecture, but its verified question engine is not included in this milestone.',planned:true,spoken:''}
+ }
+ return{expr:'2 + 3 = ?',answer:5,label:'UNIT ROD',hint:'Use your physical abacus and count the active beads.',spoken:'two plus three'}
+}
+function newQuestion(){current=makeQ();answered=false;$('expression').textContent=current.expr;$('qLabel').textContent=current.label;$('questionHint').textContent=current.hint;$('answer').value='';$('answer').disabled=false;$('answer').placeholder=current.planned?'Module in next milestone':'Type answer or number word';$('answer').disabled=!!current.planned;$('feedback').textContent=current.planned?'This is a roadmap card, not an active exercise yet.':'';$('feedback').className='feedback';$('nextBtn').classList.toggle('hidden',!!current.planned);$('reward').classList.remove('show');setupAbacusForQuestion(current);if(!current.planned)$('answer').focus({preventScroll:true})}function normalise(s){s=String(s||'').toLowerCase().trim().replace(/[.,!?]/g,'');if(s in wordNums)return wordNums[s];let m=s.match(/^(minus )?([a-z]+)$/);if(m&&m[2] in wordNums)return m[1]?-wordNums[m[2]]:wordNums[m[2]];let n=Number(s);return s!==''&&Number.isFinite(n)?n:null}
+function checkAnswer(){if(answered||!current||current.planned)return;let val=normalise($('answer').value);if(val===null){$('feedback').textContent='Type a number, like 3, or a number word, like three.';$('feedback').className='feedback try';return}const boardGoal=mode==='friends'?5:current.answer;if(!current.planned&&Number.isFinite(boardGoal)&&virtualAbacusValue()!==boardGoal){$('feedback').textContent='Move the beads first so the virtual abacus shows '+boardGoal+'. Its current value is '+virtualAbacusValue()+'.';$('feedback').className='feedback try';return}answered=true;$('answer').disabled=true;let key=mode;skill[key]=skill[key]||{right:0,total:0};skill[key].total++;skillLevels[key]=skillLevels[key]||1;if(val===current.answer){skill[key].right++;stars++;streak++;correctRound++;skillLevels[key]=Math.min(10,skillLevels[key]+1);if(correctRound>=3){level=Math.min(10,level+1);correctRound=0;$('rewardTitle').textContent='World path cleared!';$('rewardText').textContent='You completed the round. Your next challenge may be harder.';$('treasure').textContent='🏆'}else{$('rewardTitle').textContent='Star collected!';$('rewardText').textContent='Brilliant! Your answer is correct.';$('treasure').textContent=['🌟','💎','🪙'][rand(3)]}$('feedback').textContent='✨ Correct! You are moving forward.';$('feedback').className='feedback good';$('reward').classList.add('show')}else{streak=0;correctRound=0;skillLevels[key]=Math.max(1,skillLevels[key]-1);$('feedback').textContent='Good try! The answer is '+current.answer+'. Let’s learn from it and try again.';$('feedback').className='feedback try';$('questionHint').textContent=worlds[world].hint+' Remember, mistakes help you learn.';$('reward').classList.remove('show')}$('roundProgress').style.width=((round%3+1)/3*100)+'%';$('roundLabel').textContent='Round question '+(round%3+1)+' of 3 · Level '+level;$('nextBtn').classList.remove('hidden');save()}
+function nextQuestion(){round++;newQuestion();$('roundLabel').textContent='Question '+((round%3)+1)+' of 3 · Level '+level;$('roundProgress').style.width=((round%3)/3*100)+'%'}function showHint(){$('questionHint').textContent=worlds[world].hint;if(mode==='friends')$('questionHint').textContent='Friends of 5: 1 + 4, 2 + 3, 3 + 2, 4 + 1.';if(mode==='sequence')$('questionHint').textContent='Start at the first number. Apply each + or − in order; never let the running total leave 0–9.';speakText($('questionHint').textContent)}function speakText(t){if(!('speechSynthesis'in window)){ $('feedback').textContent='Speech is not available in this browser. You can still read and type.';return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.rate=.86;u.pitch=1.05;let vs=speechSynthesis.getVoices();let en=vs.find(v=>/^en(-|_)/i.test(v.lang)&&/male|daniel|george|ryan|arthur|david/i.test(v.name))||vs.find(v=>/^en-GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang));if(en)u.voice=en;speechSynthesis.speak(u)}function speakQuestion(){let t=current.spoken||current.expr.replace(/−/g,'minus').replace(/\+/g,'plus').replace(/\?/g,'what number').replace(/=/g,'equals');speakText(t)}function voiceAnswer(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('feedback').textContent='Voice answers are not supported here. Please type your answer instead.';$('feedback').className='feedback try';return}let r=new SR();r.lang='en-US';r.interimResults=false;r.maxAlternatives=3;$('voiceBtn').textContent='🎙️ Listening…';r.onresult=e=>{$('answer').value=e.results[0][0].transcript;$('voiceBtn').textContent='🎙️ Say answer';checkAnswer()};r.onerror=()=>{$('voiceBtn').textContent='🎙️ Say answer';$('feedback').textContent='I did not catch that. Try again or type your answer.'};r.onend=()=>$('voiceBtn').textContent='🎙️ Say answer';r.start()}$('answer').addEventListener('keydown',e=>{if(e.key==='Enter')answered?nextQuestion():checkAnswer()});$('answer').addEventListener('input',()=>{if(answered){answered=false;$('answer').disabled=false}});
+// Initialise the abacus and question panel without forcing the player to pick a world first.
+buildVirtualAbacus();newQuestion();
+</script></body></html>
