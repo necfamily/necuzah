@@ -456,12 +456,11 @@ document.querySelector('#speak').addEventListener('click', () => {
     }
 
     speak(
-      `${currentQuestion.a} ${operationText} ${currentQuestion.b}. ` +
-      'NECUZAH! Your turn. Think carefully and find the answer.',
+      `${currentQuestion.a} ${operationText} ${currentQuestion.b}.`,
       {
         language: 'en',
         rate: 0.85,
-        pitch: 1.05,
+        pitch: 1,
         volume: 1
       }
     );
