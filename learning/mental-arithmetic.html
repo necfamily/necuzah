@@ -436,18 +436,34 @@
 
   document.querySelector('#next').addEventListener('click', makeQuestion);
 
-  document.querySelector('#speak').addEventListener('click', () => {
+document.querySelector('#speak').addEventListener('click', () => {
     if (!currentQuestion) return;
 
     const operationText =
       currentQuestion.symbol === '+' ? 'plus' :
-      currentQuestion.symbol === '-' ? 'minus' :
+      currentQuestion.symbol === '-' ||
+      currentQuestion.symbol === '−' ? 'minus' :
       currentQuestion.symbol === '×' ? 'times' :
       currentQuestion.symbol === '÷' ? 'divided by' :
-      'plus';
+      null;
+
+    if (!operationText) {
+      console.error(
+        'Unsupported arithmetic symbol:',
+        currentQuestion.symbol
+      );
+      return;
+    }
 
     speak(
-      `What is ${currentQuestion.a} ${operationText} ${currentQuestion.b}?`
+      `${currentQuestion.a} ${operationText} ${currentQuestion.b}. ` +
+      'NECUZAH! Your turn. Think carefully and find the answer.',
+      {
+        language: 'en',
+        rate: 0.85,
+        pitch: 1.05,
+        volume: 1
+      }
     );
   });
 
