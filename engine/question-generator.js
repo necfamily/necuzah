@@ -53,11 +53,16 @@ export function generateQuestion(options = {}) {
 
   const answer = symbol === "+" ? a + b : a - b;
 
+  // Keep the existing symbol and expression unchanged.
+  // Provide a consistent spoken operation for compatible pages.
+  const spokenSymbol = symbol === "−" ? "minus" : "plus";
+
   return Object.freeze({
     id: createQuestionId(),
     a,
     b,
     symbol,
+    spokenSymbol,
     answer,
     expression: `${a} ${symbol} ${b}`,
     difficulty: level,
