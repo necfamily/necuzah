@@ -1,1 +1,299 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10384b"><meta name="description" content="Friendly abacus and mental mathematics learning."><title>Single-Rod Subtraction | NECUZAH Super Abacus</title><link rel="stylesheet" href="styles/main.css"></head><body><header class="site-header"><div class="header-inner"><div class="brand">🌟 NECUZAH SUPER ABACUS</div><div class="tagline">Abacus skills · Mental mathematics · Learning adventures</div><nav class="top-links"><a href="index.html">Home</a><a href="adventure-map.html">Adventure Map</a><a href="learner-profile.html">Learner Profile</a><a href="rod-training.html">Rod Training</a></nav></div></header><main class="container"><section class="hero"><span class="pill">LEARNING STUDIO</span><h1>Single-Rod Subtraction</h1><p>Practise subtraction with answers from 0 to 9.</p><div class="actions"><a class="btn light" href="../adventure-map.html">← Adventure Map</a><button class="btn gold" id="speak" type="button">🔊 Read question</button></div></section><section class="grid"><article class="card"><div class="muted">YOUR CHALLENGE</div><div class="question" id="question">Ready?</div><p class="muted" style="text-align:center">Use your abacus, think carefully, and enter your answer.</p><form id="answer-form"><div class="field"><label for="answer">Your answer</label><input class="answer-input" id="answer" type="number" inputmode="numeric" min="0" max="9" required></div><div class="actions"><button class="btn" type="submit">Check answer</button><button class="btn light" id="next" type="button">New question</button></div></form><div class="notice" id="feedback" role="status" aria-live="polite">You can do this!</div></article><article class="card"><h2>Today's progress</h2><p>Answered: <strong id="answered">0</strong></p><p>Stars: <strong id="stars">0</strong> ⭐</p><p>Accuracy: <strong id="accuracy">0%</strong></p><div class="track"><div class="fill" id="fill"></div></div><p class="muted">A correct answer earns one star and five coins. Every attempt is part of learning.</p><a class="btn light" href="../learner-profile.html">Learner profile</a></article></section></main><footer class="site-footer">NECUZAH Super Abacus · Learn at your own pace · Every effort counts</footer><script type="module">import {createQuestion} from '../engine/question-generator.js';import {nextDifficulty,feedbackFor} from '../engine/adaptive-learning.js';import {recordAnswer,getProgress,getAccuracy} from '../engine/progress-manager.js';import {speak} from '../engine/speech-manager.js';const skill='unit-subtraction';let level=1,current=createQuestion({skill,level});const q=document.querySelector('#question'),input=document.querySelector('#answer'),feedback=document.querySelector('#feedback');function show(){q.textContent=current.prompt;input.value='';feedback.className='notice';feedback.textContent='Use your abacus or solve mentally, then enter your answer.'}function render(){const p=getProgress();document.querySelector('#answered').textContent=p.answered;document.querySelector('#stars').textContent=p.stars;document.querySelector('#accuracy').textContent=getAccuracy(p)+'%';document.querySelector('#fill').style.width=getAccuracy(p)+'%'}document.querySelector('#answer-form').addEventListener('submit',e=>{e.preventDefault();if(input.value.trim()==='')return;const correct=Number(input.value)===current.answer;const m=feedbackFor(correct);feedback.className='notice '+(correct?'good':'try');feedback.textContent=m.title+' '+m.message;recordAnswer({skill,correct,question:current.prompt});const recent=getProgress().recent.filter(x=>x.skill===skill);level=nextDifficulty(level,recent);render()});document.querySelector('#next').addEventListener('click',()=>{current=createQuestion({skill,level});show()});document.querySelector('#speak').addEventListener('click',()=>speak('What is '+current.a+(current.operation==='addition'?' plus ':' minus ')+current.b+'?'));show();render();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10384b">
+  <meta name="description" content="Practise single-rod subtraction with NECUZAH Super Abacus.">
+  <title>Single-Rod Subtraction | NECUZAH Super Abacus</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">🌟 NECUZAH SUPER ABACUS</div>
+      <div class="tagline">Abacus skills · Mental mathematics · Learning adventures</div>
+      <nav class="top-links">
+        <a href="../index.html">Home</a>
+        <a href="../adventure-map.html">Adventure Map</a>
+        <a href="../learner-profile.html">Learner Profile</a>
+        <a href="../rod-training.html">Rod Training</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="pill">LEARNING STUDIO</span>
+      <h1>Single-Rod Subtraction</h1>
+      <p>Practise subtraction with answers from 0 to 9.</p>
+      <div class="actions">
+        <a class="btn light" href="../adventure-map.html">← Adventure Map</a>
+        <button class="btn gold" id="speak" type="button">🔊 Read question</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="muted">YOUR CHALLENGE</div>
+        <div class="question" id="question" aria-live="polite">Preparing your question...</div>
+        <p class="muted" style="text-align:center">
+          Use your abacus, think carefully, and enter your answer.
+        </p>
+
+        <form id="answer-form">
+          <div class="field">
+            <label for="answer">Your answer</label>
+            <input
+              class="answer-input"
+              id="answer"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="9"
+              step="1"
+              required
+            >
+          </div>
+          <div class="actions">
+            <button class="btn" type="submit" id="check">Check answer</button>
+            <button class="btn light" id="next" type="button">New question</button>
+          </div>
+        </form>
+
+        <div class="notice" id="feedback" role="status" aria-live="polite">
+          You can do this!
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Today's progress</h2>
+        <p>Answered: <strong id="answered">0</strong></p>
+        <p>Stars: <strong id="stars">0</strong> ⭐</p>
+        <p>Accuracy: <strong id="accuracy">0%</strong></p>
+        <div class="track">
+          <div class="fill" id="fill"></div>
+        </div>
+        <p class="muted">
+          A correct answer earns one star and five coins. Every attempt is part of learning.
+        </p>
+        <a class="btn light" href="../learner-profile.html">Learner profile</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    NECUZAH Super Abacus · Learn at your own pace · Every effort counts
+  </footer>
+
+  <script type="module">
+    import { generateQuestion } from '../engine/question-generator.js';
+    import {
+      createLearningState,
+      recordResult,
+      getLearningFeedback
+    } from '../engine/adaptive-learning.js';
+    import {
+      loadProgress,
+      saveProgress,
+      recordAnswer,
+      getProgressSummary
+    } from '../engine/progress-manager.js';
+    import { speak } from '../engine/speech-manager.js';
+
+    const skillId = 'unit-subtraction';
+
+    const questionElement = document.querySelector('#question');
+    const answerInput = document.querySelector('#answer');
+    const feedbackElement = document.querySelector('#feedback');
+    const answerForm = document.querySelector('#answer-form');
+    const checkButton = document.querySelector('#check');
+    const nextButton = document.querySelector('#next');
+    const speakButton = document.querySelector('#speak');
+
+    let difficulty = 1;
+    let currentQuestion = null;
+    let learningState = createLearningState(difficulty);
+    let progress = loadProgress();
+    let answeredCurrentQuestion = false;
+
+    function makeQuestion() {
+      // Restrict this activity to single-digit subtraction.
+      // Both numbers and the answer remain between 0 and 9.
+      const largestNumber = Math.min(9, Math.max(1, difficulty + 3));
+      const a = Math.floor(Math.random() * (largestNumber + 1));
+      const b = Math.floor(Math.random() * (a + 1));
+
+      currentQuestion = {
+        a,
+        b,
+        operation: 'subtraction',
+        symbol: '−',
+        answer: a - b,
+        prompt: `${a} − ${b} = ?`
+      };
+
+      // Use the shared question generator when it supports a
+      // compatible subtraction question. The local fallback above
+      // guarantees that this lesson stays within 0–9.
+      try {
+        const generated = generateQuestion({
+          operation: 'subtraction',
+          difficulty: 1,
+          maxNumber: largestNumber,
+          allowNegative: false
+        });
+
+        if (
+          generated &&
+          Number.isInteger(generated.a) &&
+          Number.isInteger(generated.b) &&
+          generated.a >= 0 &&
+          generated.a <= 9 &&
+          generated.b >= 0 &&
+          generated.b <= generated.a &&
+          Number.isInteger(generated.answer) &&
+          generated.answer >= 0 &&
+          generated.answer <= 9
+        ) {
+          currentQuestion = {
+            ...generated,
+            symbol: '−',
+            prompt: `${generated.a} − ${generated.b} = ?`,
+            operation: 'subtraction'
+          };
+        }
+      } catch (error) {
+        // Keep the valid single-digit fallback question.
+      }
+
+      answeredCurrentQuestion = false;
+      checkButton.disabled = false;
+      answerInput.disabled = false;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      questionElement.textContent = currentQuestion.prompt;
+      answerInput.value = '';
+      feedbackElement.className = 'notice';
+      feedbackElement.textContent =
+        'Use your abacus or solve mentally, then enter your answer.';
+      answerInput.focus();
+    }
+
+    function renderProgress() {
+      const summary = getProgressSummary(progress);
+
+      const answered = Number(summary.answered ?? 0);
+      const stars = Number(summary.stars ?? 0);
+      const accuracy = Math.max(
+        0,
+        Math.min(100, Number(summary.accuracy ?? 0))
+      );
+
+      document.querySelector('#answered').textContent = answered;
+      document.querySelector('#stars').textContent = stars;
+      document.querySelector('#accuracy').textContent = `${accuracy}%`;
+      document.querySelector('#fill').style.width = `${accuracy}%`;
+    }
+
+    function getFeedbackMessage(correct) {
+      try {
+        const message = getLearningFeedback(learningState);
+
+        if (typeof message === 'string' && message.trim()) {
+          return message;
+        }
+
+        if (message && typeof message === 'object') {
+          return [message.title, message.message]
+            .filter(Boolean)
+            .join(' ');
+        }
+      } catch (error) {
+        // Use the safe feedback below.
+      }
+
+      return correct
+        ? 'Excellent work! You got it right.'
+        : 'Good try! Move the beads carefully and try again.';
+    }
+
+    answerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (answeredCurrentQuestion) {
+        feedbackElement.textContent =
+          'You have already answered this question. Choose New question to continue.';
+        return;
+      }
+
+      if (answerInput.value.trim() === '') {
+        answerInput.focus();
+        return;
+      }
+
+      const answer = Number(answerInput.value);
+
+      if (!Number.isInteger(answer) || answer < 0 || answer > 9) {
+        feedbackElement.className = 'notice try';
+        feedbackElement.textContent =
+          'Please enter a whole number from 0 to 9.';
+        return;
+      }
+
+      const correct = answer === currentQuestion.answer;
+      answeredCurrentQuestion = true;
+
+      learningState = recordResult(
+        learningState,
+        correct,
+        skillId
+      );
+
+      const message = getFeedbackMessage(correct);
+      feedbackElement.className = `notice ${correct ? 'good' : 'try'}`;
+      feedbackElement.textContent = correct
+        ? `⭐ ${message}`
+        : `${message} The correct answer is ${currentQuestion.answer}.`;
+
+      try {
+        progress = recordAnswer(progress, {
+          skillId,
+          correct
+        });
+        saveProgress(progress);
+        renderProgress();
+      } catch (error) {
+        console.error('Could not save learning progress:', error);
+        feedbackElement.textContent +=
+          ' Your answer was checked, but progress could not be saved.';
+      }
+
+      if (correct) {
+        difficulty = Math.min(6, difficulty + 1);
+      }
+
+      checkButton.disabled = true;
+
+      if (typeof speak === 'function') {
+        // Speech is optional; the activity still works without it.
+      }
+    });
+
+    nextButton.addEventListener('click', makeQuestion);
+
+    speakButton.addEventListener('click', () => {
+      if (!currentQuestion) return;
+
+      speak(
+        `What is ${currentQuestion.a} minus ${currentQuestion.b}?`
+      );
+    });
+
+    renderProgress();
+    makeQuestion();
+  </script>
+</body>
+</html>
