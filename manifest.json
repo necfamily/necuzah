@@ -1,11 +1,13 @@
 {
-  "name":"NECUZAH Super Abacus",
-  "short_name":"NECUZAH",
-  "description":"Friendly abacus skills and mental mathematics adventures.",
-  "start_url":"./index.html",
-  "scope":"./",
-  "display":"standalone",
-  "background_color":"#fff9e9",
-  "theme_color":"#10384b",
-  "icons":[]
+  "id": "./index.html",
+  "name": "NECUZAH Super Abacus",
+  "short_name": "NECUZAH",
+  "description": "Friendly abacus skills and mental mathematics adventures.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff9e9",
+  "theme_color": "#10384b",
+  "icons": []
 }
