@@ -1,1 +1,280 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10384b"><meta name="description" content="Friendly abacus and mental mathematics learning."><title>Multi-Rod Training | NECUZAH Super Abacus</title><link rel="stylesheet" href="styles/main.css"></head><body><header class="site-header"><div class="header-inner"><div class="brand">🌟 NECUZAH SUPER ABACUS</div><div class="tagline">Abacus skills · Mental mathematics · Learning adventures</div><nav class="top-links"><a href="index.html">Home</a><a href="adventure-map.html">Adventure Map</a><a href="learner-profile.html">Learner Profile</a><a href="rod-training.html">Rod Training</a></nav></div></header><main class="container"><section class="hero"><span class="pill">LEARNING STUDIO</span><h1>Multi-Rod Training</h1><p>Start with number warm-ups. Full place-value rod modelling is a later milestone.</p><div class="actions"><a class="btn light" href="../adventure-map.html">← Adventure Map</a><button class="btn gold" id="speak" type="button">🔊 Read question</button></div></section><section class="grid"><article class="card"><div class="muted">YOUR CHALLENGE</div><div class="question" id="question">Ready?</div><p class="muted" style="text-align:center">Use your abacus, think carefully, and enter your answer.</p><form id="answer-form"><div class="field"><label for="answer">Your answer</label><input class="answer-input" id="answer" type="number" inputmode="numeric" min="0" max="9" required></div><div class="actions"><button class="btn" type="submit">Check answer</button><button class="btn light" id="next" type="button">New question</button></div></form><div class="notice" id="feedback" role="status" aria-live="polite">You can do this!</div></article><article class="card"><h2>Today's progress</h2><p>Answered: <strong id="answered">0</strong></p><p>Stars: <strong id="stars">0</strong> ⭐</p><p>Accuracy: <strong id="accuracy">0%</strong></p><div class="track"><div class="fill" id="fill"></div></div><p class="muted">A correct answer earns one star and five coins. Every attempt is part of learning.</p><a class="btn light" href="../learner-profile.html">Learner profile</a></article></section></main><footer class="site-footer">NECUZAH Super Abacus · Learn at your own pace · Every effort counts</footer><script type="module">import {createQuestion} from '../engine/question-generator.js';import {nextDifficulty,feedbackFor} from '../engine/adaptive-learning.js';import {recordAnswer,getProgress,getAccuracy} from '../engine/progress-manager.js';import {speak} from '../engine/speech-manager.js';const skill='multi-rod-training';let level=1,current=createQuestion({skill,level});const q=document.querySelector('#question'),input=document.querySelector('#answer'),feedback=document.querySelector('#feedback');function show(){q.textContent=current.prompt;input.value='';feedback.className='notice';feedback.textContent='Use your abacus or solve mentally, then enter your answer.'}function render(){const p=getProgress();document.querySelector('#answered').textContent=p.answered;document.querySelector('#stars').textContent=p.stars;document.querySelector('#accuracy').textContent=getAccuracy(p)+'%';document.querySelector('#fill').style.width=getAccuracy(p)+'%'}document.querySelector('#answer-form').addEventListener('submit',e=>{e.preventDefault();if(input.value.trim()==='')return;const correct=Number(input.value)===current.answer;const m=feedbackFor(correct);feedback.className='notice '+(correct?'good':'try');feedback.textContent=m.title+' '+m.message;recordAnswer({skill,correct,question:current.prompt});const recent=getProgress().recent.filter(x=>x.skill===skill);level=nextDifficulty(level,recent);render()});document.querySelector('#next').addEventListener('click',()=>{current=createQuestion({skill,level});show()});document.querySelector('#speak').addEventListener('click',()=>speak('What is '+current.a+(current.operation==='addition'?' plus ':' minus ')+current.b+'?'));show();render();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10384b">
+  <meta name="description" content="Practise multi-rod abacus skills and mental mathematics with NECUZAH Super Abacus.">
+  <title>Multi-Rod Training | NECUZAH Super Abacus</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">🌟 NECUZAH SUPER ABACUS</div>
+      <div class="tagline">Abacus skills · Mental mathematics · Learning adventures</div>
+
+      <nav class="top-links" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../adventure-map.html">Adventure Map</a>
+        <a href="../learner-profile.html">Learner Profile</a>
+        <a href="../rod-training.html">Rod Training</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="pill">LEARNING STUDIO</span>
+      <h1>Multi-Rod Training</h1>
+      <p>
+        Start with number warm-ups. Build confidence before moving on
+        to full place-value rod modelling.
+      </p>
+
+      <div class="actions">
+        <a class="btn light" href="../adventure-map.html">← Adventure Map</a>
+        <button class="btn gold" id="speak" type="button">
+          🔊 Read question
+        </button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="muted">YOUR CHALLENGE</div>
+
+        <div class="question" id="question" aria-live="polite">
+          Preparing your question...
+        </div>
+
+        <p class="muted" style="text-align:center">
+          Use your abacus, think carefully, and enter your answer.
+        </p>
+
+        <form id="answer-form">
+          <div class="field">
+            <label for="answer">Your answer</label>
+            <input
+              class="answer-input"
+              id="answer"
+              name="answer"
+              type="number"
+              inputmode="numeric"
+              step="1"
+              required
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="submit">Check answer</button>
+            <button class="btn light" id="next" type="button">
+              New question
+            </button>
+          </div>
+        </form>
+
+        <div class="notice" id="feedback" role="status" aria-live="polite">
+          You can do this!
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Today's progress</h2>
+
+        <p>Answered: <strong id="answered">0</strong></p>
+        <p>Stars: <strong id="stars">0</strong> ⭐</p>
+        <p>Accuracy: <strong id="accuracy">0%</strong></p>
+
+        <div class="track" aria-label="Accuracy progress">
+          <div class="fill" id="fill"></div>
+        </div>
+
+        <p class="muted">
+          A correct answer earns one star and five coins. Every attempt
+          is part of learning.
+        </p>
+
+        <a class="btn light" href="../learner-profile.html">
+          Learner profile
+        </a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    NECUZAH Super Abacus · Learn at your own pace · Every effort counts
+  </footer>
+
+  <script type="module">
+    import { generateQuestion } from '../engine/question-generator.js';
+    import {
+      createLearningState,
+      recordResult,
+      getLearningFeedback
+    } from '../engine/adaptive-learning.js';
+    import {
+      loadProgress,
+      saveProgress,
+      recordAnswer,
+      getProgressSummary
+    } from '../engine/progress-manager.js';
+    import { speak } from '../engine/speech-manager.js';
+
+    const skillId = 'multi-rod-training';
+
+    const questionElement = document.querySelector('#question');
+    const answerInput = document.querySelector('#answer');
+    const feedbackElement = document.querySelector('#feedback');
+    const answerForm = document.querySelector('#answer-form');
+    const nextButton = document.querySelector('#next');
+    const speakButton = document.querySelector('#speak');
+
+    let progress = loadProgress();
+    let learningState = createLearningState(1);
+    let difficulty = 1;
+    let currentQuestion = null;
+    let answeredCurrentQuestion = false;
+
+    function createTrainingQuestion() {
+      /*
+       * Use the shared question generator with supported operations.
+       * Randomly choose addition or subtraction for this warm-up.
+       */
+      const operation = Math.random() < 0.5
+        ? 'addition'
+        : 'subtraction';
+
+      currentQuestion = generateQuestion({
+        operation,
+        difficulty,
+        maxNumber: Math.min(9 * difficulty, 99),
+        allowNegative: false
+      });
+
+      answeredCurrentQuestion = false;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (!currentQuestion) return;
+
+      questionElement.textContent =
+        currentQuestion.expression ??
+        `${currentQuestion.a} ${currentQuestion.symbol} ${currentQuestion.b}`;
+
+      answerInput.value = '';
+      answerInput.disabled = false;
+
+      feedbackElement.className = 'notice';
+      feedbackElement.textContent =
+        'Use your abacus or solve mentally, then enter your answer.';
+
+      answerInput.focus();
+    }
+
+    function renderProgress() {
+      const summary = getProgressSummary(progress);
+
+      const answered = Number(summary.answered ?? 0);
+      const stars = Number(summary.stars ?? 0);
+      const accuracy = Math.max(
+        0,
+        Math.min(100, Number(summary.accuracy ?? 0))
+      );
+
+      document.querySelector('#answered').textContent = answered;
+      document.querySelector('#stars').textContent = stars;
+      document.querySelector('#accuracy').textContent = `${accuracy}%`;
+      document.querySelector('#fill').style.width = `${accuracy}%`;
+    }
+
+    function getFeedback(isCorrect) {
+      const result = getLearningFeedback(learningState);
+
+      if (typeof result === 'string') {
+        return result;
+      }
+
+      if (result && typeof result === 'object') {
+        const title = result.title ?? '';
+        const message = result.message ?? '';
+
+        if (title || message) {
+          return `${title} ${message}`.trim();
+        }
+      }
+
+      return isCorrect
+        ? 'Excellent work! Keep going.'
+        : 'Good try. Check the beads and try another question.';
+    }
+
+    answerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!currentQuestion || answeredCurrentQuestion) return;
+      if (answerInput.value.trim() === '') return;
+
+      const submittedAnswer = Number(answerInput.value);
+
+      if (!Number.isFinite(submittedAnswer)) {
+        feedbackElement.className = 'notice try';
+        feedbackElement.textContent = 'Please enter a valid number.';
+        return;
+      }
+
+      const isCorrect = submittedAnswer === Number(currentQuestion.answer);
+
+      answeredCurrentQuestion = true;
+      answerInput.disabled = true;
+
+      learningState = recordResult(
+        learningState,
+        isCorrect,
+        skillId
+      );
+
+      progress = recordAnswer(progress, {
+        skillId,
+        correct: isCorrect
+      });
+
+      saveProgress(progress);
+
+      feedbackElement.className = `notice ${isCorrect ? 'good' : 'try'}`;
+      feedbackElement.textContent = getFeedback(isCorrect);
+
+      renderProgress();
+    });
+
+    nextButton.addEventListener('click', () => {
+      createTrainingQuestion();
+    });
+
+    speakButton.addEventListener('click', () => {
+      if (!currentQuestion) return;
+
+      const spokenQuestion = currentQuestion.expression ??
+        `${currentQuestion.a} ${currentQuestion.symbol} ${currentQuestion.b}`;
+
+      speak(`What is ${spokenQuestion}?`);
+    });
+
+    try {
+      renderProgress();
+      createTrainingQuestion();
+    } catch (error) {
+      console.error('Multi-Rod Training could not start:', error);
+
+      questionElement.textContent = 'Question loading problem';
+      feedbackElement.className = 'notice try';
+      feedbackElement.textContent =
+        'The training engine could not load. Please check the question generator and progress manager imports.';
+      answerInput.disabled = true;
+    }
+  </script>
+</body>
+</html>
