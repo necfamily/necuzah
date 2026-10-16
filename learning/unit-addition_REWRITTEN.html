@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10384b">
+  <meta name="description" content="Practise single-rod addition with NECUZAH Super Abacus.">
+  <title>Single-Rod Addition | NECUZAH Super Abacus</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/adventure.css">
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; background: #fffbed; color: #20384b; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .site-header { background: linear-gradient(125deg,#10384b,#176b65); color: #fff; padding: 1.25rem; }
+    .header-inner, .container { width: min(1120px, calc(100% - 28px)); margin-inline: auto; }
+    .brand { font-weight: 900; font-size: clamp(1.1rem,3vw,1.6rem); }
+    .tagline { margin-top: .35rem; opacity: .9; }
+    .top-links, .actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1rem; }
+    .top-links a { color: white; text-decoration: none; border: 1px solid #ffffff70; border-radius: 999px; padding: .55rem .85rem; }
+    .container { padding-block: 1.25rem 2rem; }
+    .hero { background: linear-gradient(135deg,#155b59,#227a70); color: white; border-radius: 24px; padding: clamp(1.2rem,4vw,2.2rem); margin-bottom: 1.2rem; }
+    .pill { display: inline-block; background: #eaf7f3; color: #1a625c; padding: .4rem .8rem; border-radius: 999px; font-weight: 850; letter-spacing: .06em; }
+    h1 { font-size: clamp(1.8rem,5vw,3rem); margin: .8rem 0; }
+    .hero p { font-size: clamp(1rem,2.5vw,1.2rem); line-height: 1.6; max-width: 65ch; }
+    .grid { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(260px,1fr); gap: 1rem; align-items: start; }
+    .card { background: white; border: 1px solid #d9e5e5; border-radius: 24px; padding: clamp(1rem,3vw,1.7rem); box-shadow: 0 8px 25px #1233440a; min-width: 0; }
+    .muted { color: #637587; line-height: 1.6; }
+    .question-label { color: #59776f; font-weight: 900; letter-spacing: .12em; text-align: center; }
+    .question { margin: 1rem 0; padding: clamp(1.4rem,5vw,3rem) 1rem; border-radius: 22px; background: #f0f8f6; border: 1px solid #d6e9e4; text-align: center; font-size: clamp(2.5rem,10vw,4.5rem); font-weight: 900; letter-spacing: .04em; color: #1c3b4c; }
+    .field { margin: 1.1rem 0; }
+    label { display: block; font-weight: 800; margin-bottom: .55rem; }
+    .answer-input { width: 100%; max-width: 420px; box-sizing: border-box; display: block; margin-inline: auto; border: 2px solid #cfdddd; border-radius: 16px; padding: 1rem; font: inherit; font-size: 1.4rem; text-align: center; }
+    .answer-input:focus { outline: 3px solid #ffc65e70; border-color: #1b756d; }
+    .btn { appearance: none; border: 0; border-radius: 15px; background: #20675f; color: white; padding: .9rem 1.1rem; font: inherit; font-weight: 850; text-decoration: none; text-align: center; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; }
+    .btn.light { background: #edf6f4; color: #1c3b4c; }
+    .btn.gold { background: #ffc65e; color: #49381b; }
+    .actions .btn { flex: 1 1 150px; }
+    .notice { margin-top: 1rem; padding: 1rem; background: #f3f6f6; border-radius: 16px; line-height: 1.5; }
+    .notice.good { background: #e4f7e9; color: #205d38; }
+    .notice.try { background: #fff1df; color: #754515; }
+    .stats { display: grid; grid-template-columns: 1fr; gap: .7rem; }
+    .stat { background: #f2f7f6; border-radius: 16px; padding: .9rem 1rem; }
+    .stat-label { color: #637587; font-weight: 750; }
+    .stat-value { font-size: 1.7rem; font-weight: 900; margin-top: .25rem; }
+    .track { height: 12px; background: #e7eeee; border-radius: 999px; overflow: hidden; margin: 1rem 0; }
+    .fill { height: 100%; width: 0; background: linear-gradient(90deg,#ffc65e,#24776e); transition: width .25s ease; }
+    .site-footer { text-align: center; padding: 1.5rem 1rem 2rem; color: #637587; line-height: 1.6; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } .top-links a { font-size: .92rem; } .hero, .card { border-radius: 22px; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">🌟 NECUZAH SUPER ABACUS</div>
+      <div class="tagline">Abacus skills · Mental mathematics · Learning adventures</div>
+      <nav class="top-links" aria-label="Main navigation">
+        <a href="../index.html">Home</a>
+        <a href="../adventure-map.html">Adventure Map</a>
+        <a href="../learner-profile.html">Learner Profile</a>
+        <a href="../rod-training.html">Rod Training</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="pill">LEARNING STUDIO</span>
+      <h1>Single-Rod Addition ✨</h1>
+      <p>Practise addition while keeping each total within 0–9. Use your physical abacus or solve mentally, and build confidence one question at a time.</p>
+      <div class="actions">
+        <a class="btn light" href="../adventure-map.html">← Adventure Map</a>
+        <button class="btn gold" id="speak" type="button">🔊 Read question</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="muted" style="font-weight:900;letter-spacing:.1em">YOUR CHALLENGE</div>
+        <div class="question-label">SOLVE THIS</div>
+        <div class="question" id="question" aria-live="polite">Preparing your first question…</div>
+        <p class="muted" style="text-align:center">Use your abacus, think carefully, and enter the total below.</p>
+        <form id="answer-form">
+          <div class="field">
+            <label for="answer">Your answer</label>
+            <input class="answer-input" id="answer" type="number" inputmode="numeric" min="0" max="9" step="1" autocomplete="off" required>
+          </div>
+          <div class="actions">
+            <button class="btn" type="submit">Check answer</button>
+            <button class="btn light" id="next" type="button">New question</button>
+          </div>
+        </form>
+        <div class="notice" id="feedback" role="status" aria-live="polite">Use your abacus or solve mentally, then enter your answer.</div>
+      </article>
+
+      <aside class="card">
+        <h2>My Progress</h2>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Questions answered</div><div class="stat-value" id="answered">0</div></div>
+          <div class="stat"><div class="stat-label">Stars earned</div><div class="stat-value"><span id="stars">0</span> ⭐</div></div>
+          <div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value" id="accuracy">0%</div></div>
+        </div>
+        <div class="track" aria-label="Accuracy"><div class="fill" id="fill"></div></div>
+        <p class="muted" id="level-note">Practice level 1. We'll gently adjust the challenge as you improve.</p>
+        <p class="muted">A correct answer earns one star and five coins. Mistakes are part of learning.</p>
+        <a class="btn light" href="../learner-profile.html">View learner profile</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">NECUZAH Super Abacus · Learn at your own pace · Every effort counts</footer>
+
+  <script type="module">
+    import { generateQuestion } from '../engine/question-generator.js';
+    import { createLearningState, recordResult, getLearningFeedback } from '../engine/adaptive-learning.js';
+    import { loadProgress, saveProgress, recordAnswer, getProgressSummary } from '../engine/progress-manager.js';
+    import { speak } from '../engine/speech-manager.js';
+
+    const skillId = 'unit-addition';
+    let learningState = createLearningState(1);
+    let progress = loadProgress();
+    let currentQuestion = null;
+    let answeredCurrent = false;
+
+    const questionEl = document.querySelector('#question');
+    const answerInput = document.querySelector('#answer');
+    const feedbackEl = document.querySelector('#feedback');
+    const answerForm = document.querySelector('#answer-form');
+    const nextButton = document.querySelector('#next');
+    const speakButton = document.querySelector('#speak');
+
+    function createAdditionQuestion() {
+      const difficulty = learningState.difficulty || 1;
+      // Single-rod practice must stay within 0–9. Choose a valid pair explicitly.
+      const maxA = Math.min(8, 2 + difficulty);
+      const a = Math.floor(Math.random() * (maxA + 1));
+      const b = Math.floor(Math.random() * (9 - a + 1));
+      currentQuestion = {
+        a,
+        b,
+        answer: a + b,
+        expression: `${a} + ${b}`,
+        operation: 'addition'
+      };
+      answeredCurrent = false;
+      questionEl.textContent = currentQuestion.expression;
+      answerInput.value = '';
+      answerInput.disabled = false;
+      nextButton.disabled = false;
+      feedbackEl.className = 'notice';
+      feedbackEl.textContent = 'Use your abacus or solve mentally, then enter your answer.';
+    }
+
+    function renderProgress() {
+      const summary = getProgressSummary(progress);
+      const answered = Number(summary.answered ?? 0);
+      const stars = Number(summary.stars ?? 0);
+      const accuracy = Number(summary.accuracy ?? 0);
+      document.querySelector('#answered').textContent = answered;
+      document.querySelector('#stars').textContent = stars;
+      document.querySelector('#accuracy').textContent = `${accuracy}%`;
+      document.querySelector('#fill').style.width = `${Math.max(0, Math.min(100, accuracy))}%`;
+      document.querySelector('#level-note').textContent =
+        `Practice level ${learningState.difficulty || 1}. We'll gently adjust the challenge as you improve.`;
+    }
+
+    function readCurrentQuestion() {
+      if (!currentQuestion) return;
+      speak(`What is ${currentQuestion.a} plus ${currentQuestion.b}?`);
+    }
+
+    answerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!currentQuestion || answeredCurrent) return;
+      const rawAnswer = answerInput.value.trim();
+      if (rawAnswer === '') {
+        feedbackEl.className = 'notice try';
+        feedbackEl.textContent = 'Please enter an answer first.';
+        return;
+      }
+
+      const givenAnswer = Number(rawAnswer);
+      if (!Number.isInteger(givenAnswer) || givenAnswer < 0 || givenAnswer > 9) {
+        feedbackEl.className = 'notice try';
+        feedbackEl.textContent = 'For this single-rod activity, enter a whole number from 0 to 9.';
+        return;
+      }
+
+      const correct = givenAnswer === currentQuestion.answer;
+      const message = getLearningFeedback(recordResult(learningState, correct, skillId));
+      feedbackEl.className = `notice ${correct ? 'good' : 'try'}`;
+      feedbackEl.textContent = `${message.title} ${message.message}`;
+
+      progress = recordAnswer(progress, { skillId, correct });
+      saveProgress(progress);
+      answeredCurrent = true;
+      answerInput.disabled = true;
+      renderProgress();
+    });
+
+    nextButton.addEventListener('click', createAdditionQuestion);
+    speakButton.addEventListener('click', readCurrentQuestion);
+
+    createAdditionQuestion();
+    renderProgress();
+  </script>
+</body>
+</html>
