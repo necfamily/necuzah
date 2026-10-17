@@ -4,152 +4,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10384b">
   <title>NECUZAH 3D Road Test</title>
+
+  <!-- Fix Three.js module resolution -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: #102b3a;
       color: white;
       font-family: Arial, sans-serif;
     }
+
     header {
       padding: 16px;
       text-align: center;
       background: #10384b;
     }
+
     h1 { margin: 0 0 6px; font-size: 22px; }
     p { margin: 5px 0; }
+
     #viewer {
       width: 100%;
       height: 72vh;
-      min-height: 350px;
+      height: 72dvh;
+      min-height: 320px;
       display: block;
       background: #b9e6ff;
+      touch-action: pan-y;
     }
+
     .message {
       padding: 14px;
       text-align: center;
       line-height: 1.5;
+      overflow-wrap: anywhere;
     }
+
     button {
       background: #f5c542;
+      color: #102b3a;
       border: 0;
       border-radius: 8px;
       padding: 12px 18px;
       font-weight: bold;
       cursor: pointer;
     }
+
+    #status { white-space: pre-wrap; }
+
+    @media (max-width: 600px) {
+      #viewer {
+        height: 65dvh;
+        min-height: 300px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <header>
     <h1>NECUZAH Super Racing</h1>
     <p>3D Road Preview</p>
   </header>
 
-  <canvas id="viewer"></canvas>
+  <canvas id="viewer" aria-label="Interactive 3D road preview"></canvas>
 
   <div class="message">
-    <p id="status">Loading the 3D road model...</p>
+    <p id="status" role="status">Preparing the 3D viewer...</p>
     <button onclick="location.href='../index.html'">
       Return to Home
     </button>
   </div>
 
   <script type="module">
-    import * as THREE from
-      'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
-    import { GLTFLoader } from
-      'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js';
-
-    const canvas = document.getElementById('viewer');
     const status = document.getElementById('status');
+    const canvas = document.getElementById('viewer');
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xb9e6ff);
-    scene.fog = new THREE.Fog(0xb9e6ff, 30, 100);
+    function showError(message) {
+      status.textContent = message;
+    }
 
-    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 500);
-    camera.position.set(8, 8, 12);
+    try {
+      const THREE = await import('three');
+      const { GLTFLoader } =
+        await import('three/addons/loaders/GLTFLoader.js');
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xb9e6ff);
+      scene.fog = new THREE.Fog(0xb9e6ff, 40, 160);
 
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x607060, 2));
+      const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 1000);
+      camera.position.set(12, 10, 15);
 
-    const sun = new THREE.DirectionalLight(0xffffff, 2.5);
-    sun.position.set(10, 20, 10);
-    sun.castShadow = true;
-    scene.add(sun);
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: false
+      });
 
-    const grid = new THREE.GridHelper(100, 50, 0x527080, 0x8da4ad);
-    scene.add(grid);
+      renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio || 1, 2)
+      );
 
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(200, 200),
-      new THREE.MeshStandardMaterial({ color: 0x719b56 })
-    );
-    ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.05;
-    scene.add(ground);
+      renderer.shadowMap.enabled = true;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    const loader = new GLTFLoader();
+      scene.add(
+        new THREE.HemisphereLight(0xffffff, 0x607060, 2)
+      );
 
-    loader.load(
-      '../necuzah-road.glb',
-      (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
+      const sun = new THREE.DirectionalLight(0xffffff, 2.5);
+      sun.position.set(10, 20, 10);
+      sun.castShadow = true;
+      scene.add(sun);
 
-        const box = new THREE.Box3().setFromObject(model);
-        const size = box.getSize(new THREE.Vector3());
-        const center = box.getCenter(new THREE.Vector3());
+      const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(200, 200),
+        new THREE.MeshStandardMaterial({ color: 0x719b56 })
+      );
 
-        model.position.sub(center);
+      ground.rotation.x = -Math.PI / 2;
+      ground.position.y = -0.1;
+      ground.receiveShadow = true;
+      scene.add(ground);
 
-        const maxDimension = Math.max(size.x, size.y, size.z);
-        if (maxDimension > 0) {
-          const scale = 12 / maxDimension;
-          model.scale.setScalar(scale);
-        }
+      const loader = new GLTFLoader();
 
-        camera.position.set(12, 10, 15);
-        camera.lookAt(0, 0, 0);
+      function resize() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
 
-        status.textContent =
-          'Road model loaded. Drag to inspect it using your mouse or finger.';
-      },
-      undefined,
-      (error) => {
-        console.error(error);
-        status.textContent =
-          'The model could not load. Check the model filename, its GitHub location, and your internet connection.';
+        if (!width || !height) return;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height, false);
       }
-    );
 
-    function resize() {
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      if (!width || !height) return;
+      window.addEventListener('resize', resize);
+      resize();
 
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
+      status.textContent = 'Loading the 3D road model...';
+
+      loader.load(
+        '../necuzah-road.glb',
+
+        (gltf) => {
+          const model = gltf.scene;
+
+          model.updateMatrixWorld(true);
+
+          const originalBox =
+            new THREE.Box3().setFromObject(model);
+
+          if (originalBox.isEmpty()) {
+            showError(
+              'The model file loaded, but it contains no visible 3D objects.'
+            );
+            return;
+          }
+
+          const originalSize =
+            originalBox.getSize(new THREE.Vector3());
+
+          const center =
+            originalBox.getCenter(new THREE.Vector3());
+
+          model.position.sub(center);
+
+          const maxDimension = Math.max(
+            originalSize.x,
+            originalSize.y,
+            originalSize.z
+          );
+
+          if (maxDimension > 0) {
+            model.scale.setScalar(12 / maxDimension);
+          }
+
+          model.traverse((object) => {
+            if (object.isMesh) {
+              object.castShadow = true;
+              object.receiveShadow = true;
+            }
+          });
+
+          scene.add(model);
+          model.updateMatrixWorld(true);
+
+          const box = new THREE.Box3().setFromObject(model);
+          const size = box.getSize(new THREE.Vector3());
+          const fittedCenter = box.getCenter(new THREE.Vector3());
+
+          const span = Math.max(size.x, size.y, size.z, 1);
+
+          camera.near = 0.01;
+          camera.far = span * 100;
+          camera.position.set(
+            fittedCenter.x + span * 1.2,
+            fittedCenter.y + span * 0.9,
+            fittedCenter.z + span * 1.5
+          );
+
+          camera.lookAt(fittedCenter);
+          camera.updateProjectionMatrix();
+
+          sun.position.set(
+            fittedCenter.x + span,
+            fittedCenter.y + span * 2,
+            fittedCenter.z + span
+          );
+
+          resize();
+
+          status.textContent =
+            'Road model loaded successfully.';
+
+          console.log('Road model loaded:', size);
+        },
+
+        (progress) => {
+          if (progress.total > 0) {
+            const percent = Math.round(
+              progress.loaded / progress.total * 100
+            );
+
+            status.textContent =
+              `Loading the 3D road model... ${percent}%`;
+          }
+        },
+
+        (error) => {
+          console.error('Road model loading failed:', error);
+
+          showError(
+            'The 3D road could not be loaded.\n\n' +
+            'Check that necuzah-road.glb is in the main ' +
+            'repository folder and that the internet connection ' +
+            'is working. Refresh this page to try again.'
+          );
+        }
+      );
+
+      function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+    } catch (error) {
+      console.error('3D viewer initialization failed:', error);
+
+      showError(
+        'The 3D viewer could not start.\n\n' +
+        'Check your internet connection and reload the page. ' +
+        'The viewer needs to download the Three.js library.'
+      );
     }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
-    animate();
   </script>
 </body>
 </html>
