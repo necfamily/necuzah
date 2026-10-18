@@ -13,9 +13,67 @@
 <script>
 (()=>{'use strict';const $=id=>document.getElementById(id),canvas=$('track'),ctx=canvas.getContext('2d'),W=720,H=410,FINISH=100,MAX_RACE_TIME=75;
 const audio={ctx:null,master:null,engineGain:null,engineOsc:null,engineFilter:null,enabled:true,started:false};
-function initAudio(){if(!audio.enabled)return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!audio.ctx){audio.ctx=new AC();audio.master=audio.ctx.createGain();audio.master.gain.value=.24;audio.master.connect(audio.ctx.destination);audio.engineOsc=audio.ctx.createOscillator();audio.engineOsc.type='sawtooth';audio.engineFilter=audio.ctx.createBiquadFilter();audio.engineFilter.type='lowpass';audio.engineFilter.frequency.value=180;audio.engineGain=audio.ctx.createGain();audio.engineGain.gain.value=0;audio.engineOsc.connect(audio.engineFilter);audio.engineFilter.connect(audio.engineGain);audio.engineGain.connect(audio.master);audio.engineOsc.start()}if(audio.ctx.state==='suspended')audio.ctx.resume();audio.started=true}catch(e){}}
-function soundEffect(kind){if(!audio.enabled)return;initAudio();if(!audio.ctx||audio.ctx.state!=='running')return;try{const c=audio.ctx,osc=c.createOscillator(),gain=c.createGain();osc.connect(gain);gain.connect(audio.master);const now=c.currentTime;let start=420,end=700,duration=.16,wave='sine',volume=.28;if(kind==='count'){start=620;end=380;duration=.13;volume=.22}else if(kind==='go'){start=420;end=980;duration=.38;wave='triangle';volume=.34}else if(kind==='correct'){start=520;end=1050;duration=.22;wave='triangle';volume=.32}else if(kind==='wrong'){start=240;end=150;duration=.25;volume=.2}else if(kind==='overtake'){start=330;end=850;duration=.25;wave='square';volume=.17}else if(kind==='finish'){start=520;end=1040;duration=.55;wave='triangle';volume=.3}else if(kind==='boost'){start=280;end=900;duration=.32;wave='sawtooth';volume=.22}osc.type=wave;osc.frequency.setValueAtTime(start,now);osc.frequency.exponentialRampToValueAtTime(Math.max(50,end),now+duration);gain.gain.setValueAtTime(.001,now);gain.gain.exponentialRampToValueAtTime(volume,now+.025);gain.gain.exponentialRampToValueAtTime(.001,now+duration);osc.start(now);osc.stop(now+duration+.02)}catch(e){}}
-function updateEngineSound(){if(!audio.ctx||!audio.engineGain||!audio.enabled)return;const running=state.phase==='racing'||state.phase==='countdown'||state.phase==='finishing';const target=running?.055:0;const now=audio.ctx.currentTime;audio.engineGain.gain.setTargetAtTime(target,now,.12);if(audio.engineOsc)audio.engineOsc.frequency.setTargetAtTime(48+Math.max(0,state.speed)*8,now,.09);if(audio.engineFilter)audio.engineFilter.frequency.setTargetAtTime(130+Math.max(0,state.speed)*23,now,.12)}
+function initAudio(){
+  if(!audio.enabled)return Promise.resolve(false);
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){setAudioStatus('Audio is not supported by this browser.');return Promise.resolve(false)}
+    if(!audio.ctx){
+      audio.ctx=new AC();
+      audio.master=audio.ctx.createGain();
+      audio.master.gain.value=.72;
+      audio.master.connect(audio.ctx.destination);
+      audio.engineOsc=audio.ctx.createOscillator();
+      audio.engineOsc.type='sawtooth';
+      audio.engineFilter=audio.ctx.createBiquadFilter();
+      audio.engineFilter.type='lowpass';
+      audio.engineFilter.frequency.value=260;
+      audio.engineGain=audio.ctx.createGain();
+      audio.engineGain.gain.value=0;
+      audio.engineOsc.connect(audio.engineFilter);
+      audio.engineFilter.connect(audio.engineGain);
+      audio.engineGain.connect(audio.master);
+      audio.engineOsc.start();
+    }
+    const resume=audio.ctx.state==='suspended'?audio.ctx.resume():Promise.resolve();
+    return Promise.resolve(resume).then(()=>{
+      audio.started=audio.ctx.state==='running';
+      if(audio.started){setAudioStatus('Sound ready');updateEngineSound();return true}
+      setAudioStatus('Tap SOUND ON, then START RACING');return false;
+    }).catch(()=>{setAudioStatus('Tap the page and turn your phone volume up');return false});
+  }catch(e){setAudioStatus('Could not start audio on this browser');return Promise.resolve(false)}
+}
+function setAudioStatus(message){
+  const el=$('soundBtn');
+  if(el)el.title=message;
+}
+function soundEffect(kind){
+  if(!audio.enabled)return;
+  initAudio().then(ready=>{
+    if(!ready||!audio.ctx||audio.ctx.state!=='running'||!audio.master)return;
+    try{
+      const c=audio.ctx,osc=c.createOscillator(),gain=c.createGain();
+      osc.connect(gain);gain.connect(audio.master);
+      const now=c.currentTime;
+      let start=420,end=700,duration=.16,wave='sine',volume=.34;
+      if(kind==='count'){start=660;end=440;duration=.18;volume=.34}
+      else if(kind==='go'){start=420;end=1040;duration=.42;wave='triangle';volume=.48}
+      else if(kind==='correct'){start=560;end=1120;duration=.28;wave='triangle';volume=.46}
+      else if(kind==='wrong'){start=250;end=130;duration=.3;volume=.35}
+      else if(kind==='overtake'){start=360;end=880;duration=.3;wave='square';volume=.27}
+      else if(kind==='finish'){start=520;end=1180;duration=.7;wave='triangle';volume=.46}
+      else if(kind==='boost'){start=260;end=980;duration=.4;wave='sawtooth';volume=.36}
+      osc.type=wave;
+      osc.frequency.setValueAtTime(start,now);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(50,end),now+duration);
+      gain.gain.setValueAtTime(.001,now);
+      gain.gain.exponentialRampToValueAtTime(volume,now+.03);
+      gain.gain.exponentialRampToValueAtTime(.001,now+duration);
+      osc.start(now);osc.stop(now+duration+.03);
+    }catch(e){setAudioStatus('Sound playback failed; tap SOUND ON again')}
+  });
+}
+function updateEngineSound(){if(!audio.ctx||!audio.engineGain||!audio.enabled)return;const running=state.phase==='racing'||state.phase==='countdown'||state.phase==='finishing';const target=running?.13:0;const now=audio.ctx.currentTime;audio.engineGain.gain.setTargetAtTime(target,now,.12);if(audio.engineOsc)audio.engineOsc.frequency.setTargetAtTime(48+Math.max(0,state.speed)*8,now,.09);if(audio.engineFilter)audio.engineFilter.frequency.setTargetAtTime(130+Math.max(0,state.speed)*23,now,.12)}
 const state={phase:'ready',countdown:0,lane:1,distance:0,speed:5,stars:0,coins:0,wins:0,correct:0,answered:0,question:null,questionCount:0,difficulty:1,roadOffset:0,elapsed:0,lastTime:0,wrongTimer:null,finishers:[],finishWait:null,racers:[],feedbackToken:0,boostUntil:0,finishingTimer:0};
 function savedNumber(k){try{const n=Number(localStorage.getItem('necuzah-race-'+k));return Number.isFinite(n)&&n>=0?n:0}catch(_){return 0}}state.stars=savedNumber('stars');state.coins=savedNumber('coins');state.wins=savedNumber('wins');function save(){try{localStorage.setItem('necuzah-race-stars',state.stars);localStorage.setItem('necuzah-race-coins',state.coins);localStorage.setItem('necuzah-race-wins',state.wins)}catch(_){}}
 function makeRacers(){return[{id:'player',name:'YOUR BUS',type:'bus',color:'#f5bd27',lane:1,progress:0,speed:5,player:true,finishTime:null},{id:'r1',name:'BLUE RACER',type:'car',color:'#2378df',lane:0,progress:0,speed:5.25,baseSpeed:5.25,phase:.2,player:false,finishTime:null,nextLane:4,burstEvery:6.5,burstLength:1.35},{id:'r2',name:'RED RACER',type:'car',color:'#e54d58',lane:2,progress:0,speed:5.45,baseSpeed:5.45,phase:2.1,player:false,finishTime:null,nextLane:6,burstEvery:8,burstLength:1.1},{id:'r3',name:'GREEN RACER',type:'van',color:'#18a66b',lane:0,progress:0,speed:5.05,baseSpeed:5.05,phase:4.2,player:false,finishTime:null,nextLane:5,burstEvery:7.3,burstLength:1.25}]}
@@ -34,6 +92,6 @@ function wheel(x,y,r){ctx.fillStyle='#172033';ctx.beginPath();ctx.ellipse(x,y,r,
 function carPosition(r){const y=140+Math.min(FINISH,r.progress)/FINISH*220,s=.43+y/H*.50,e=edges(y),f=[.25,.5,.75];return{x:e.left+(e.right-e.left)*f[r.lane],y,s}}function drawScene(){ctx.clearRect(0,0,W,H);drawCity();for(let i=0;i<5;i++){const y=160+((i*57+state.roadOffset*1.5)%190),e=edges(y);star(e.left+(e.right-e.left)*(.2+i*.15),y,5+state.roadOffset%2,'#ffd34f')}[...state.racers].sort((a,b)=>a.progress-b.progress).forEach(r=>{const p=carPosition(r);if(r.type==='bus')drawBus(p.x,p.y,p.s);else drawCar(p.x,p.y,p.s,r.color);if(r.player){ctx.fillStyle='#10254e';ctx.font=`bold ${Math.max(10,12*p.s)}px system-ui`;ctx.textAlign='center';ctx.fillText('YOUR BUS',p.x,p.y-39*p.s)}});if(state.phase==='countdown'){ctx.fillStyle='#10254ecb';ctx.beginPath();ctx.arc(360,215,48,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffd34f';ctx.font='bold 58px system-ui';ctx.textAlign='center';ctx.fillText(state.countdown>0?String(Math.ceil(state.countdown)):'GO!',360,235)}}
 function updateRivals(dt){state.racers.slice(1).forEach(r=>{if(r.finishTime!==null)return;const variation=Math.sin(state.elapsed*.72+r.phase)*.34+Math.sin(state.elapsed*.31+r.phase*1.7)*.18;const burst=(state.elapsed%r.burstEvery)<r.burstLength?1.05:0;r.speed=Math.max(4.55,Math.min(6.65,r.baseSpeed+variation+burst));const wasBehind=state.racers[0].progress-r.progress; r.progress=Math.min(FINISH,r.progress+r.speed*.70*dt);if(wasBehind>0&&state.racers[0].progress-r.progress<=0)soundEffect('overtake');if(state.elapsed>=r.nextLane){const opts=[0,1,2].filter(l=>l!==r.lane);r.lane=opts[Math.floor(Math.random()*opts.length)];r.nextLane=state.elapsed+4+Math.random()*3}if(r.progress>=FINISH){r.progress=FINISH;r.finishTime=state.elapsed;state.finishers.push(r)}})}
 function loop(now){const dt=Math.min(Math.max((now-state.lastTime)/1000||0,0),.05);state.lastTime=now;if(state.phase==='countdown'){state.countdown-=dt;if(Math.ceil(state.countdown)!==Math.ceil(state.countdown+dt))soundEffect('count');if(state.countdown<=0){soundEffect('go');state.phase='racing';state.elapsed=0;$('modeLabel').textContent='Race in progress';$('raceHud').innerHTML='🏁 <strong>RACE ON!</strong>';$('raceStatus').innerHTML='<strong>GO! Answer to accelerate!</strong>';feedback('Race on! Correct answers boost your bus.','good')}else $('raceHud').textContent=Math.ceil(state.countdown)+'...'}if(state.phase==='racing'){state.elapsed+=dt;state.roadOffset=(state.roadOffset+state.speed*28*dt)%1000;const target=state.elapsed<state.boostUntil?Math.max(5,state.speed):5;state.speed+=(target-state.speed)*(state.elapsed<state.boostUntil?1.7:.65)*dt;const p=state.racers[0];p.speed=state.speed;p.progress=Math.min(FINISH,p.progress+state.speed*.70*dt);state.distance=p.progress;updateRivals(dt);if(p.progress>=FINISH)recordFinisher(p);if(state.elapsed>=MAX_RACE_TIME&&state.phase==='racing'){state.phase='finishing';state.finishWait=state.elapsed+1.5;state.racers.forEach(r=>{if(r.finishTime===null){r.finishTime=state.elapsed;r.timedOut=true;state.finishers.push(r)}});$('raceStatus').innerHTML='<strong>⏱ Time is up! Calculating the standings.</strong>';feedback('Time is up! Checking final positions.')}}else if(state.phase==='finishing'){state.elapsed+=dt;state.roadOffset=(state.roadOffset+state.speed*20*dt)%1000;if(state.elapsed>=state.finishWait)finishRace()}if(state.phase==='racing'||state.phase==='finishing'){if(Math.floor(state.elapsed*4)!==Math.floor((state.elapsed-dt)*4))updateStats()}updateEngineSound();drawScene();requestAnimationFrame(loop)}
-$('answer').addEventListener('input',()=>{if(state.phase!=='racing')return;state.feedbackToken++;checkAnswer()});$('answer').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(state.phase==='racing'&&state.question){const v=$('answer').value.trim();if(v!==''&&/^\d+$/.test(v)&&Number(v)!==state.question.answer){if(state.wrongTimer)clearTimeout(state.wrongTimer);state.wrongTimer=null;state.answered++;state.speed=Math.max(2.5,state.speed-1);$('answer').value='';feedback('Not quite — try again! 💪','bad');updateStats()}}}});$('keypad').addEventListener('click',e=>{const b=e.target.closest('[data-key]');if(!b)return;const k=b.dataset.key;if(k==='back')backspace();else if(k==='clear')clearAnswer();else enterDigit(k)});$('clearBtn').addEventListener('click',backspace);$('soundBtn').addEventListener('click',()=>{audio.enabled=!audio.enabled;$('soundBtn').textContent=audio.enabled?'🔊 SOUND ON':'🔇 SOUND OFF';$('soundBtn').setAttribute('aria-pressed',String(audio.enabled));if(audio.enabled){initAudio();soundEffect('correct')}else if(audio.engineGain&&audio.ctx)audio.engineGain.gain.setTargetAtTime(0,audio.ctx.currentTime,.05)});$('startBtn').addEventListener('click',startRace);$('restartBtn').addEventListener('click',resetRace);$('leftBtn').addEventListener('click',()=>moveCar(-1));$('rightBtn').addEventListener('click',()=>moveCar(1));$('boostBtn').addEventListener('click',boost);window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();moveCar(-1)}if(e.key==='ArrowRight'){e.preventDefault();moveCar(1)}if(e.key==='Escape')clearAnswer()});state.racers=makeRacers();updateStats();drawScene();state.lastTime=performance.now();requestAnimationFrame(loop);
+$('answer').addEventListener('input',()=>{if(state.phase!=='racing')return;state.feedbackToken++;checkAnswer()});$('answer').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(state.phase==='racing'&&state.question){const v=$('answer').value.trim();if(v!==''&&/^\d+$/.test(v)&&Number(v)!==state.question.answer){if(state.wrongTimer)clearTimeout(state.wrongTimer);state.wrongTimer=null;state.answered++;state.speed=Math.max(2.5,state.speed-1);$('answer').value='';feedback('Not quite — try again! 💪','bad');updateStats()}}}});$('keypad').addEventListener('click',e=>{const b=e.target.closest('[data-key]');if(!b)return;const k=b.dataset.key;if(k==='back')backspace();else if(k==='clear')clearAnswer();else enterDigit(k)});$('clearBtn').addEventListener('click',backspace);$('soundBtn').addEventListener('click',()=>{audio.enabled=!audio.enabled;$('soundBtn').textContent=audio.enabled?'🔊 SOUND ON':'🔇 SOUND OFF';$('soundBtn').setAttribute('aria-pressed',String(audio.enabled));if(audio.enabled){initAudio().then(ok=>{if(ok)soundEffect('correct')})}else if(audio.engineGain&&audio.ctx)audio.engineGain.gain.setTargetAtTime(0,audio.ctx.currentTime,.05)});$('startBtn').addEventListener('click',startRace);$('restartBtn').addEventListener('click',resetRace);$('leftBtn').addEventListener('click',()=>moveCar(-1));$('rightBtn').addEventListener('click',()=>moveCar(1));$('boostBtn').addEventListener('click',boost);window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();moveCar(-1)}if(e.key==='ArrowRight'){e.preventDefault();moveCar(1)}if(e.key==='Escape')clearAnswer()});state.racers=makeRacers();updateStats();drawScene();state.lastTime=performance.now();requestAnimationFrame(loop);
 })();
 </script></body></html>
